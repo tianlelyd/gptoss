@@ -27,8 +27,9 @@ interface ChatStore {
   systemPrompt: string
   
   createChat: () => string
+  createNewChat: () => string
   deleteChat: (id: string) => void
-  setCurrentChat: (id: string) => void
+  setCurrentChat: (id: string | null) => void
   addMessage: (message: Omit<Message, 'id' | 'timestamp'>) => void
   updateMessage: (id: string, content: string, reasoning?: string) => void
   setModel: (model: string) => void
@@ -37,6 +38,16 @@ interface ChatStore {
   setSystemPrompt: (prompt: string) => void
   getCurrentChat: () => Chat | undefined
 }
+
+const deserializeDates = (chat: any): Chat => ({
+  ...chat,
+  createdAt: new Date(chat.createdAt),
+  updatedAt: new Date(chat.updatedAt),
+  messages: chat.messages.map((msg: any) => ({
+    ...msg,
+    timestamp: new Date(msg.timestamp)
+  }))
+})
 
 export const useChatStore = create<ChatStore>()(
   persist(
@@ -49,6 +60,24 @@ export const useChatStore = create<ChatStore>()(
       systemPrompt: '',
       
       createChat: () => {
+        const chatId = nanoid()
+        const newChat: Chat = {
+          id: chatId,
+          title: 'New Chat',
+          messages: [],
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        }
+        
+        set((state) => ({
+          chats: [...state.chats, newChat],
+          currentChatId: chatId,
+        }))
+        
+        return chatId
+      },
+      
+      createNewChat: () => {
         const chatId = nanoid()
         const newChat: Chat = {
           id: chatId,
@@ -132,6 +161,26 @@ export const useChatStore = create<ChatStore>()(
     }),
     {
       name: 'gptoss-chat-storage',
+      storage: {
+        getItem: (name) => {
+          const str = window.localStorage.getItem(name)
+          if (!str) return null
+          const state = JSON.parse(str)
+          return {
+            ...state,
+            state: {
+              ...state.state,
+              chats: state.state.chats.map(deserializeDates)
+            }
+          }
+        },
+        setItem: (name, value) => {
+          window.localStorage.setItem(name, JSON.stringify(value))
+        },
+        removeItem: (name) => {
+          window.localStorage.removeItem(name)
+        }
+      }
     }
   )
 )

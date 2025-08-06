@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { Message } from './store'
 import { nanoid } from 'nanoid'
 
@@ -20,6 +20,10 @@ export function useChat({
   const [messages, setMessages] = useState<Message[]>(initialMessages)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<Error | null>(null)
+  
+  useEffect(() => {
+    setMessages(initialMessages)
+  }, [JSON.stringify(initialMessages.map(m => m.id))])
 
   const append = useCallback(async (message: { role: string; content: string }) => {
     const userMessage: Message = {

@@ -40,7 +40,7 @@ export function ChatInterface() {
       reasoningLevel,
       systemPrompt,
     },
-    initialMessages: mounted ? currentChat?.messages || [] : [],
+    initialMessages: mounted && currentChatId && currentChat ? currentChat.messages : [],
     onResponse: () => {
       if (!currentChatId) {
         createChat()
