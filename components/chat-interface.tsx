@@ -199,7 +199,7 @@ export function ChatInterface() {
               id="file-upload"
               className="hidden"
               multiple
-              onChange={(e) => {
+              onChange={() => {
                 // File upload handling placeholder
               }}
             />

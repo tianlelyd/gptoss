@@ -9,7 +9,7 @@ import { SystemPrompt } from "@/components/system-prompt"
 import { TokenCounter } from "@/components/token-counter"
 import { ChatHistory } from "@/components/chat-history"
 import { Button } from "@/components/ui/button"
-import { Menu, X, UserCircle, Info, HelpCircle } from "lucide-react"
+import { Menu, X, Info, HelpCircle } from "lucide-react"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
 import { useChatStore } from "@/lib/store"
@@ -18,7 +18,7 @@ export default function Home() {
   const [sidebarOpen, setSidebarOpen] = useState(true)
   const [historyOpen, setHistoryOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
-  const { currentChatId, createNewChat, getCurrentChat } = useChatStore()
+  const { createNewChat, getCurrentChat } = useChatStore()
   
   useEffect(() => {
     setMounted(true)

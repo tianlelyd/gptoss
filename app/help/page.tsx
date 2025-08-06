@@ -43,10 +43,10 @@ export default function HelpPage() {
                   <span className="font-semibold">Model Selector:</span> Choose between the gpt-oss-120b and gpt-oss-20b models from the sidebar. Each model has its own strengths, so feel free to experiment.
                 </li>
                 <li>
-                  <span className="font-semibold">System Prompt:</span> You can provide a system prompt to guide the model's behavior. This is a powerful feature for tailoring the AI's responses to your specific needs.
+                  <span className="font-semibold">System Prompt:</span> You can provide a system prompt to guide the model&apos;s behavior. This is a powerful feature for tailoring the AI&apos;s responses to your specific needs.
                 </li>
                 <li>
-                  <span className="font-semibold">Chat Interface:</span> Simply type your message in the input box and press enter. The model's response will appear in the chat window.
+                  <span className="font-semibold">Chat Interface:</span> Simply type your message in the input box and press enter. The model&apos;s response will appear in the chat window.
                 </li>
                 <li>
                   <span className="font-semibold">Token Counter:</span> Keep an eye on the token counter to understand the resource consumption of your interactions.

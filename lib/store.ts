@@ -39,11 +39,11 @@ interface ChatStore {
   getCurrentChat: () => Chat | undefined
 }
 
-const deserializeDates = (chat: any): Chat => ({
+const deserializeDates = (chat: Chat): Chat => ({
   ...chat,
   createdAt: new Date(chat.createdAt),
   updatedAt: new Date(chat.updatedAt),
-  messages: chat.messages.map((msg: any) => ({
+  messages: chat.messages.map((msg: Message) => ({
     ...msg,
     timestamp: new Date(msg.timestamp)
   }))

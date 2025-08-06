@@ -1,7 +1,8 @@
 import { openai } from "@ai-sdk/openai";
 import { streamText } from "ai";
 
-export const runtime = "edge";
+// Remove edge runtime for OpenNext Cloudflare compatibility
+// export const runtime = "edge";
 
 export async function POST(req: Request) {
   try {
@@ -13,11 +14,11 @@ export async function POST(req: Request) {
 
     // Map display model names to actual OpenAI models
     const modelMapping: Record<string, string> = {
-      "gpt-oss-120b": "gpt-4-turbo-preview",
-      "gpt-oss-20b": "gpt-3.5-turbo",
+      "gpt-oss-120b": "gpt-4.1-nano",
+      "gpt-oss-20b": "gpt-4.1-nano",
     };
 
-    const actualModel = modelMapping[model] || "gpt-3.5-turbo";
+    const actualModel = modelMapping[model] || "gpt-4.1-nano";
 
     const systemMessages = [];
     

@@ -23,6 +23,7 @@ export function useChat({
   
   useEffect(() => {
     setMessages(initialMessages)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [JSON.stringify(initialMessages.map(m => m.id))])
 
   const append = useCallback(async (message: { role: string; content: string }) => {

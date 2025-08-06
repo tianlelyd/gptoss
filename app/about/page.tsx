@@ -36,7 +36,7 @@ export default function AboutPage() {
             <div>
               <h2 className="text-2xl font-bold tracking-tight">Open-Weight Language Models</h2>
               <p className="mt-4 text-muted-foreground">
-                The term "open-weight" means that the model's parameters, the very core of the AI, are publicly available. This allows developers and researchers to not only use the models but also to fine-tune them for specific tasks, conduct research on their inner workings, and build new applications on top of them. The gpt-oss models are released under the permissive Apache 2.0 license, encouraging broad use and innovation.
+                The term &quot;open-weight&quot; means that the model&apos;s parameters, the very core of the AI, are publicly available. This allows developers and researchers to not only use the models but also to fine-tune them for specific tasks, conduct research on their inner workings, and build new applications on top of them. The gpt-oss models are released under the permissive Apache 2.0 license, encouraging broad use and innovation.
               </p>
             </div>
             <div>
@@ -45,7 +45,7 @@ export default function AboutPage() {
                 <div>
                   <h3 className="text-lg font-semibold">Mixture-of-Experts (MoE)</h3>
                   <p className="mt-2 text-muted-foreground">
-                    The gpt-oss models utilize a Mixture-of-Experts (MoE) architecture. This means that instead of one giant model processing every request, the system is composed of many smaller "expert" models. For any given input, the system intelligently routes the request to the most relevant experts. This approach significantly improves efficiency and performance, especially for complex tasks.
+                    The gpt-oss models utilize a Mixture-of-Experts (MoE) architecture. This means that instead of one giant model processing every request, the system is composed of many smaller &quot;expert&quot; models. For any given input, the system intelligently routes the request to the most relevant experts. This approach significantly improves efficiency and performance, especially for complex tasks.
                   </p>
                 </div>
                 <div>
@@ -57,7 +57,7 @@ export default function AboutPage() {
                 <div>
                   <h3 className="text-lg font-semibold">Reinforcement Learning from Human Feedback (RLHF)</h3>
                   <p className="mt-2 text-muted-foreground">
-                    To ensure the models are helpful and harmless, they are trained using a technique called Reinforcement Learning from Human Feedback (RLHF). This process involves human reviewers rating the model's responses, which then helps to fine-tune the model's behavior to better align with human values and expectations.
+                    To ensure the models are helpful and harmless, they are trained using a technique called Reinforcement Learning from Human Feedback (RLHF). This process involves human reviewers rating the model&apos;s responses, which then helps to fine-tune the model&apos;s behavior to better align with human values and expectations.
                   </p>
                 </div>
               </div>
