@@ -1,42 +1,65 @@
-import {
-  LanguageModel,
-  generateText,
-} from "ai";
-import { respData, respErr } from "@/lib/resp";
 import { openai } from "@ai-sdk/openai";
+import { streamText } from "ai";
+
+export const runtime = "edge";
 
 export async function POST(req: Request) {
   try {
-    const { prompt, provider, model } = await req.json();
-    if (!prompt || !provider || !model) {
-      return respErr("invalid params");
+    const { messages, model = "gpt-4.1-nano", systemPrompt, reasoningLevel = "high" } = await req.json();
+    
+    if (!messages || !Array.isArray(messages)) {
+      return Response.json({ error: "Invalid messages" }, { status: 400 });
     }
 
-    let textModel: LanguageModel;
-
-    switch (provider) {
-      case "openai":
-        textModel = openai(model);
-        break;
-      default:
-        return respErr("invalid provider");
+    const systemMessages = [];
+    
+    if (systemPrompt) {
+      systemMessages.push({
+        role: 'system',
+        content: systemPrompt
+      });
     }
 
-    const { text, warnings } = await generateText({
-      model: textModel,
-      prompt: prompt,
+    const reasoningInstructions = {
+      high: "Think through your response step by step. Be thorough in your reasoning.",
+      medium: "Consider the key aspects of your response.",
+      low: "Provide a direct response."
+    };
+
+    systemMessages.push({
+      role: 'system',
+      content: reasoningInstructions[reasoningLevel as keyof typeof reasoningInstructions]
     });
 
-    if (warnings && warnings.length > 0) {
-      console.log("gen text warnings:", provider, warnings);
-      return respErr("gen text failed");
-    }
-
-    return respData({
-      text: text,
+    const result = await streamText({
+      model: openai(model),
+      messages: [...systemMessages, ...messages],
+      temperature: 0.7,
+      maxOutputTokens: 2000,
     });
-  } catch (err) {
-    console.log("gen text failed:", err);
-    return respErr("gen text failed");
+
+    // Create a TransformStream to handle the streaming response
+    const encoder = new TextEncoder();
+    const stream = new ReadableStream({
+      async start(controller) {
+        for await (const chunk of result.textStream) {
+          controller.enqueue(encoder.encode(`0:"${chunk}"\n`));
+        }
+        controller.close();
+      },
+    });
+
+    return new Response(stream, {
+      headers: {
+        'Content-Type': 'text/plain; charset=utf-8',
+        'Cache-Control': 'no-cache',
+      },
+    });
+  } catch (error) {
+    console.error("Chat API error:", error);
+    return Response.json(
+      { error: "Failed to process chat request" },
+      { status: 500 }
+    );
   }
 }

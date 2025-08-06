@@ -41,6 +41,7 @@ Features to Implement (fully replicate from https://www.gpt-oss.com/):
 
 Deployment:
 - Use context 7 to query the latest documents during the development process.
+- Use playwright mcp to verify the functionality of the app.
 - use 'pnpm create cloudflare@latest . --framework=next --platform=workers
 ' init project.
 - Must use OpenNext deployment to Cloudflare Workers following this guide: https://opennext.js.org/cloudflare/get-started
