@@ -30,17 +30,23 @@ GPTOss - A Next.js 15 chat application replicating gpt-oss.com functionality, co
 - **Runtime**: Cloudflare Workers via @opennextjs/cloudflare
 - **Language**: TypeScript with strict mode enabled
 - **Styling**: Tailwind CSS v4 with PostCSS
-- **UI Components**: Shadcn UI (to be integrated)
+- **UI Components**: Shadcn UI with Radix UI primitives
 - **AI Integration**: @ai-sdk/openai with Vercel AI SDK
+- **State Management**: Zustand with persist middleware (localStorage)
 - **Package Manager**: pnpm (required)
 
 ### Project Structure
 - `/app` - Next.js App Router pages and API routes
-  - `/api/chat` - API route for AI chat functionality using @ai-sdk/openai
-  - `/about`, `/help`, `/test` - Additional page routes (to be implemented)
-- `/components/ui` - Reusable UI components (Shadcn UI)
-- `/lib` - Utility functions and shared code
+  - `/api/chat` - Streaming chat API using OpenAI SDK
+  - `/about`, `/help`, `/test` - Additional page routes
+- `/components` - React components
+  - `/components/ui` - Shadcn UI components (Button, Card, Dialog, etc.)
+  - Chat-specific components: chat-interface, chat-message, markdown-renderer, model-selector, system-prompt
+- `/lib` - Core utilities and shared code
   - `/lib/resp.ts` - Standard API response helpers
+  - `/lib/store.ts` - Zustand store for chat state management
+  - `/lib/use-chat.ts` - Custom hook for chat streaming
+  - `/lib/i18n.ts` - Internationalization translations (en/zh)
 - `/.open-next` - Build output for Cloudflare Workers (generated)
 
 ### Key Configuration Files
@@ -62,10 +68,33 @@ The codebase uses standardized response helpers from `/lib/resp.ts`:
 - `respOk()` - Simple success response
 - `respErr(message)` - Error response with message
 
+### Chat Streaming Implementation
+- `/api/chat/route.ts` handles streaming responses with edge runtime
+- Custom streaming format: `0:"content"\n` for each chunk
+- `/lib/use-chat.ts` provides client-side streaming handling
+- Messages are persisted in Zustand store with localStorage
+
+### State Management Pattern
+- Zustand store in `/lib/store.ts` manages:
+  - Chat sessions (id, title, messages)
+  - Current model selection (default: gpt-4.1-nano)
+  - Reasoning level (high/medium/low)
+  - System prompt configuration
+  - UI preferences (showReasoning)
+- Store persists to localStorage with key: `gptoss-chat-storage`
+
 ### AI Integration
-- Current API route at `/api/chat` accepts POST requests with `prompt`, `provider`, and `model`
-- Uses Vercel AI SDK with @ai-sdk/openai for text generation
-- Environment variable `OPENAI_API_KEY` required for OpenAI integration
+- Chat API endpoint: POST `/api/chat`
+- Request body: `{ messages, model, systemPrompt, reasoningLevel }`
+- Uses Vercel AI SDK's `streamText` with OpenAI provider
+- Environment variable `OPENAI_API_KEY` required
+- Default model: `gpt-4.1-nano`
+- Streaming response with TransformStream
+
+### Internationalization
+- Translations in `/lib/i18n.ts` for en/zh locales
+- Covers about, help, and UI text
+- Usage: `const t = useTranslation(lang)`
 
 ### Deployment Target
 The application is configured for Cloudflare Workers deployment using OpenNext adapter. The build process transforms the Next.js application into a format compatible with Cloudflare's edge runtime.
