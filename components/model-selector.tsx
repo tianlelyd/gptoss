@@ -6,23 +6,23 @@ import { Card } from "./ui/card"
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group"
 import { Checkbox } from "./ui/checkbox"
 import { Label } from "./ui/label"
-import { Cpu, Zap } from "lucide-react"
+import { Cpu, Zap, Download } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const models = [
   {
-    id: "gpt-4.1-nano",
-    name: "gpt-4.1-nano",
-    description: "Optimized for running on-device",
-    icon: Zap,
-    label: "20b",
-  },
-  {
-    id: "gpt-4",
-    name: "gpt-4",
+    id: "gpt-oss-120b",
+    name: "gpt-oss-120b",
     description: "Designed for large-scale infrastructure",
     icon: Cpu,
     label: "120b",
+  },
+  {
+    id: "gpt-oss-20b",
+    name: "gpt-oss-20b",
+    description: "Optimized for running on-device",
+    icon: Zap,
+    label: "20b",
   },
 ]
 
@@ -55,10 +55,21 @@ export function ModelSelector() {
                   <span className="text-xs font-bold">{m.label}</span>
                 </div>
                 <div className="flex-1">
-                  <div className="font-medium">{m.name}</div>
+                  <div className="flex items-center gap-2">
+                    <div className="font-medium">{m.name}</div>
+                  </div>
                   <div className="text-xs text-muted-foreground">{m.description}</div>
                 </div>
-                <m.icon className="h-5 w-5 text-muted-foreground" />
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    // Download functionality placeholder
+                  }}
+                  className="rounded p-1 hover:bg-muted"
+                  title="Download model"
+                >
+                  <Download className="h-4 w-4 text-muted-foreground" />
+                </button>
               </div>
             </Card>
           ))}

@@ -43,7 +43,7 @@ export const useChatStore = create<ChatStore>()(
     (set, get) => ({
       chats: [],
       currentChatId: null,
-      model: 'gpt-4.1-nano',
+      model: 'gpt-oss-120b',
       reasoningLevel: 'high',
       showReasoning: true,
       systemPrompt: '',

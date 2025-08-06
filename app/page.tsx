@@ -29,8 +29,8 @@ export default function Home() {
         <div className="border-b p-4">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-lg font-semibold">gptoss playground</h1>
-              <p className="text-xs text-muted-foreground">
+              <h1 className="text-xl font-bold">gpt-oss playground</h1>
+              <p className="text-xs text-muted-foreground mt-1">
                 A demo of OpenAI&apos;s open-weight models, gpt‑oss‑120b and gpt‑oss‑20b, for developers.
               </p>
             </div>

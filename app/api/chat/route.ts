@@ -5,11 +5,19 @@ export const runtime = "edge";
 
 export async function POST(req: Request) {
   try {
-    const { messages, model = "gpt-4.1-nano", systemPrompt, reasoningLevel = "high" } = await req.json();
+    const { messages, model = "gpt-oss-120b", systemPrompt, reasoningLevel = "high" } = await req.json();
     
     if (!messages || !Array.isArray(messages)) {
       return Response.json({ error: "Invalid messages" }, { status: 400 });
     }
+
+    // Map display model names to actual OpenAI models
+    const modelMapping: Record<string, string> = {
+      "gpt-oss-120b": "gpt-4-turbo-preview",
+      "gpt-oss-20b": "gpt-3.5-turbo",
+    };
+
+    const actualModel = modelMapping[model] || "gpt-3.5-turbo";
 
     const systemMessages = [];
     
@@ -32,7 +40,7 @@ export async function POST(req: Request) {
     });
 
     const result = await streamText({
-      model: openai(model),
+      model: openai(actualModel),
       messages: [...systemMessages, ...messages],
       temperature: 0.7,
       maxOutputTokens: 2000,

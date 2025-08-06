@@ -6,7 +6,7 @@ import { ChatMessage } from "./chat-message"
 import { Button } from "./ui/button"
 import { Textarea } from "./ui/textarea"
 import { ScrollArea } from "./ui/scroll-area"
-import { Send, Loader2, Lightbulb, Code, HelpCircle, Sparkles } from "lucide-react"
+import { Send, Loader2, Lightbulb, Code, HelpCircle, Sparkles, Paperclip } from "lucide-react"
 import { useChat } from "@/lib/use-chat"
 
 const examplePrompts = [
@@ -112,6 +112,15 @@ export function ChatInterface() {
         <div className="border-t p-4">
           <form className="mx-auto max-w-4xl">
             <div className="relative flex items-end gap-2">
+              <Button
+                type="button"
+                size="icon"
+                variant="ghost"
+                className="mb-2"
+                disabled
+              >
+                <Paperclip className="h-4 w-4" />
+              </Button>
               <Textarea
                 placeholder="Ask anything"
                 className="min-h-[60px] flex-1 resize-none pr-12"
@@ -185,6 +194,24 @@ export function ChatInterface() {
       <div className="border-t p-4">
         <form onSubmit={handleSubmit} className="mx-auto max-w-4xl">
           <div className="relative flex items-end gap-2">
+            <input
+              type="file"
+              id="file-upload"
+              className="hidden"
+              multiple
+              onChange={(e) => {
+                // File upload handling placeholder
+              }}
+            />
+            <Button
+              type="button"
+              size="icon"
+              variant="ghost"
+              className="mb-2"
+              onClick={() => document.getElementById('file-upload')?.click()}
+            >
+              <Paperclip className="h-4 w-4" />
+            </Button>
             <Textarea
               value={input}
               onChange={(e) => setInput(e.target.value)}
