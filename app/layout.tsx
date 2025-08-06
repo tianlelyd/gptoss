@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "gptoss",
-  description: "A demo of OpenAI's open-weight models for developers",
+  title: "gpt-oss: Explore OpenAI's Open-Weight Language Models",
+  description: "Dive into the world of open-weight AI with the gpt-oss playground. Experiment with OpenAI's gpt-oss-120b and gpt-oss-20b models, explore fine-tuning, and build your own applications with this powerful open-source technology.",
 };
 
 export default function RootLayout({
