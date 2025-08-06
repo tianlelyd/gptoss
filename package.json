@@ -12,10 +12,13 @@
     "upload": "opennextjs-cloudflare build && opennextjs-cloudflare upload"
   },
   "dependencies": {
+    "@ai-sdk/openai": "^2.0.3",
     "@opennextjs/cloudflare": "^1.6.5",
+    "ai": "^5.0.4",
     "next": "15.4.5",
     "react": "19.1.0",
-    "react-dom": "19.1.0"
+    "react-dom": "19.1.0",
+    "zod": "^3.25.76"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
