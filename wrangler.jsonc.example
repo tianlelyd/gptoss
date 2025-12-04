@@ -12,6 +12,7 @@
   },
   "vars": {
     "NEXT_PUBLIC_GOOGLE_ANALYTICS_ID": "your-ga-id",
+    "NEXT_PUBLIC_MICROSOFT_CLARITY_ID": "your-clarity-id",
     "OPENAI_API_KEY": "your-openai-api-key"
   }
 }
